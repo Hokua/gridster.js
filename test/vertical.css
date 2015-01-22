@@ -1,0 +1,46 @@
+body, html {
+    margin:0;
+    background:#fff;
+    overflow-x:auto;
+    overflow-y:hidden;
+    width:100%;
+    height:100%;
+}
+
+/* Gridster styles */
+
+ul {
+
+    list-style: none;
+    margin:0 !important;
+    left:0;
+    width:100%;
+}
+
+.gridster {
+    margin:0;
+    padding:0;
+    background:forestgreen;
+    overflow-x:auto;
+    overflow-y:hidden;
+    height:100%;
+}
+
+.gridster .gs-w {
+    cursor: pointer;
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    background:lightgreen;
+    position:absolute;
+}
+
+.gridster .player {
+    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+}
+
+
+
+
+
+

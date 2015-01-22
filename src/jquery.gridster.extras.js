@@ -58,6 +58,8 @@
 
         return $widgets;
     };
+    
+    
 
 
     fn.get_bottom_most_occupied_cell = function() {
