@@ -847,6 +847,12 @@
         };
 
     };
+
+    /**
+     * Is the widget vertically clipped ?
+     * @param grid_data
+     * @returns {boolean}
+     */
     
     fn.is_clipped_vertically = function(grid_data)
     {
@@ -854,6 +860,13 @@
        return (frame.y+frame.height + this.options.widget_margins[1]+16.0 > this.$wrapper.height());
 
     };
+
+    /**
+     * moves the widget to the closest available not clipped cell. If this cannot be
+     * done, the widget is not moved
+     * @param $widget
+     * @returns {*}
+     */
     
     fn.move_widget_to_closest_available_cell = function($widget){
         
