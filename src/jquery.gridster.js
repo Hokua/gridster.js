@@ -1310,6 +1310,24 @@
 
         this.$preview_holder.remove();
 
+        if (!this.$widgets_to_move) {
+            this.$widgets_to_move = [];
+        }
+
+        this.$widgets_to_move.push(this.$player);
+
+        var count = this.$widgets_to_move.length,
+            i = 0;
+
+        for (; i < count; i++) {
+            var $w = this.$widgets_to_move[i];
+            if (this.is_clipped_vertically($w.coords().grid)) {
+                this.move_widget_to_closest_available_cell($w);
+            }
+
+        }
+        this.$widgets_to_move = [];
+
         this.$player = null;
         this.$helper = null;
         this.placeholder_grid_data = {};
@@ -1324,21 +1342,7 @@
             this.drag_api.set_limits(this.cols * this.min_widget_width);
         }
 
-       
-        if(this.$widgets_to_move){
 
-            var count = this.$widgets_to_move.length,
-                i = 0;
-            for(; i < count; i++){
-                var $w = this.$widgets_to_move[i];
-
-                if(this.is_clipped_vertically($w.coords().grid)){
-                    this.move_widget_to_closest_available_cell($w);
-                }
-
-            }
-            this.$widgets_to_move = [];
-        }
     };
 
 
@@ -1444,20 +1448,23 @@
         if (this.options.autogrow_cols) {
             this.drag_api.set_limits(this.cols * this.min_widget_width);
         }
-        
-        if(this.$widgets_to_move){
 
-            var count = this.$widgets_to_move.length,
-                i = 0;
-            for(; i < count; i++){
-                var $w = this.$widgets_to_move[i];
-                if(this.is_clipped_vertically($w.coords().grid)){
-                    this.move_widget_to_closest_available_cell($w);
-                }
-
-            }
+        if (!this.$widgets_to_move) {
             this.$widgets_to_move = [];
         }
+
+        this.$widgets_to_move.push(this.$resized_widget);
+
+        var count = this.$widgets_to_move.length,
+            i = 0;
+        for (; i < count; i++) {
+            var $w = this.$widgets_to_move[i];
+            if (this.is_clipped_vertically($w.coords().grid)) {
+                this.move_widget_to_closest_available_cell($w);
+            }
+
+        }
+        this.$widgets_to_move = [];
     };
 
 

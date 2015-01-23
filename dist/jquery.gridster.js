@@ -1714,13 +1714,13 @@
      */
 
     fn.move_widget_to_closest_available_cell = function ($widget) {
-
+        
         var widget_grid_data = $widget.coords().grid;
-        var start_col = widget_grid_data.col;
+        var start_col = widget_grid_data.col; 
 
         var new_data = $.extend({}, widget_grid_data);
-        var placed = false;
-
+        var placed = false; 
+        
         //check in this column
         var row = this.get_highest_occupied_row_for_col(new_data.col) + 2;
 
@@ -1759,7 +1759,7 @@
             }
 
             if (placed) {
-                return this;
+                return this; 
             }
 
             shift_idx++;
@@ -1783,7 +1783,7 @@
             shift_idx++;
         }
 
-        return false;
+        return false; 
     };
 
 
@@ -2155,6 +2155,24 @@
 
         this.$preview_holder.remove();
 
+        if (!this.$widgets_to_move) {
+            this.$widgets_to_move = [];
+        }
+
+        this.$widgets_to_move.push(this.$player);
+
+        var count = this.$widgets_to_move.length,
+            i = 0;
+
+        for (; i < count; i++) {
+            var $w = this.$widgets_to_move[i];
+            if (this.is_clipped_vertically($w.coords().grid)) {
+                this.move_widget_to_closest_available_cell($w);
+            }
+
+        }
+        this.$widgets_to_move = [];
+
         this.$player = null;
         this.$helper = null;
         this.placeholder_grid_data = {};
@@ -2170,20 +2188,6 @@
         }
 
 
-        if (this.$widgets_to_move) {
-
-            var count = this.$widgets_to_move.length,
-                i = 0;
-            for (; i < count; i++) {
-                var $w = this.$widgets_to_move[i];
-
-                if (this.is_clipped_vertically($w.coords().grid)) {
-                    this.move_widget_to_closest_available_cell($w);
-                }
-
-            }
-            this.$widgets_to_move = [];
-        }
     };
 
 
@@ -2290,19 +2294,22 @@
             this.drag_api.set_limits(this.cols * this.min_widget_width);
         }
 
-        if (this.$widgets_to_move) {
-
-            var count = this.$widgets_to_move.length,
-                i = 0;
-            for (; i < count; i++) {
-                var $w = this.$widgets_to_move[i];
-                if (this.is_clipped_vertically($w.coords().grid)) {
-                    this.move_widget_to_closest_available_cell($w);
-                }
-
-            }
+        if (!this.$widgets_to_move) {
             this.$widgets_to_move = [];
         }
+
+        this.$widgets_to_move.push(this.$resized_widget);
+
+        var count = this.$widgets_to_move.length,
+            i = 0;
+        for (; i < count; i++) {
+            var $w = this.$widgets_to_move[i];
+            if (this.is_clipped_vertically($w.coords().grid)) {
+                this.move_widget_to_closest_available_cell($w);
+            }
+
+        }
+        this.$widgets_to_move = [];
     };
 
 
@@ -2704,7 +2711,7 @@
             startRow = grid_data.row,
             endCol = startCol + grid_data.size_x,
             endRow = startRow + grid_data.size_y;
-
+        
         var col = startCol;
         for (; col < endCol; col++) {
             var row = startRow;
@@ -3161,7 +3168,7 @@
         new_data.col = col;
         new_data.row = row;
 
-        var can_move_to_new_cell =
+        var can_move_to_new_cell = 
             !(this.is_cells_occupied(new_data) || this.is_clipped_vertically(new_data));
 
         if (can_move_to_new_cell === false) {
@@ -3170,7 +3177,7 @@
 
         this.remove_from_gridmap(widget_grid_data);
         widget_grid_data.row = row;
-        widget_grid_data.col = col;
+        widget_grid_data.col = col; 
         this.add_to_gridmap(widget_grid_data);
         $widget.attr('data-row', row);
         $widget.attr('data-col', col);
