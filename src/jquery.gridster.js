@@ -829,7 +829,7 @@
 
 
     /**
-     * * converts (column,row, sizex, sizey) space into (x,y, width, height) space
+     * * converts (column,row, sizex, sizey) space into pixel (x,y, width, height) space
      * @param grid_data grid data
      * @returns {{x: *, y: *, width: number, height: number}}
      */
@@ -851,7 +851,7 @@
     /**
      * Is the widget vertically clipped ?
      * @param grid_data
-     * @returns {boolean}
+     * @returns {boolean} true of clipped, false otherwise
      */
     
     fn.is_clipped_vertically = function(grid_data)
@@ -865,7 +865,7 @@
      * moves the widget to the closest available not clipped cell. If this cannot be
      * done, the widget is not moved
      * @param $widget
-     * @returns {*}
+     * @returns false if not moved, Gridster object if moved
      */
     
     fn.move_widget_to_closest_available_cell = function($widget){
