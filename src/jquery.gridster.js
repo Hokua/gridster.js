@@ -1157,8 +1157,8 @@
         this.$player.addClass('player');
         this.player_grid_data = this.$player.coords().grid;
         this.placeholder_grid_data = $.extend({}, this.player_grid_data);
-        
-        this.$widgets_to_move = [];
+
+        this.$vertically_clipped_widgets = [];
 
         this.set_dom_grid_height(this.$el.height() +
             (this.player_grid_data.size_y * this.min_widget_height));
@@ -1310,23 +1310,23 @@
 
         this.$preview_holder.remove();
 
-        if (!this.$widgets_to_move) {
-            this.$widgets_to_move = [];
+        if (!this.$vertically_clipped_widgets) {
+            this.$vertically_clipped_widgets = [];
         }
 
-        this.$widgets_to_move.push(this.$player);
+        this.$vertically_clipped_widgets.push(this.$player);
 
-        var count = this.$widgets_to_move.length,
+        var count = this.$vertically_clipped_widgets.length,
             i = 0;
 
         for (; i < count; i++) {
-            var $w = this.$widgets_to_move[i];
+            var $w = this.$vertically_clipped_widgets[i];
             if (this.is_clipped_vertically($w.coords().grid)) {
                 this.move_widget_to_closest_available_cell($w);
             }
 
         }
-        this.$widgets_to_move = [];
+        this.$vertically_clipped_widgets = [];
 
         this.$player = null;
         this.$helper = null;
@@ -1403,7 +1403,7 @@
 
         this.$resized_widget.addClass('resizing');
 
-        this.$widgets_to_move = [];
+        this.$vertically_clipped_widgets = [];
 
 		if (this.options.resize.start) {
             this.options.resize.start.call(this, event, ui, this.$resized_widget);
@@ -1449,22 +1449,22 @@
             this.drag_api.set_limits(this.cols * this.min_widget_width);
         }
 
-        if (!this.$widgets_to_move) {
-            this.$widgets_to_move = [];
+        if (!this.$vertically_clipped_widgets) {
+            this.$vertically_clipped_widgets = [];
         }
 
-        this.$widgets_to_move.push(this.$resized_widget);
+        this.$vertically_clipped_widgets.push(this.$resized_widget);
 
-        var count = this.$widgets_to_move.length,
+        var count = this.$vertically_clipped_widgets.length,
             i = 0;
         for (; i < count; i++) {
-            var $w = this.$widgets_to_move[i];
+            var $w = this.$vertically_clipped_widgets[i];
             if (this.is_clipped_vertically($w.coords().grid)) {
                 this.move_widget_to_closest_available_cell($w);
             }
 
         }
-        this.$widgets_to_move = [];
+        this.$vertically_clipped_widgets = [];
     };
 
 
@@ -2484,9 +2484,9 @@
             
             //clipped widgets
             if(this.is_clipped_vertically(widget_grid_data)){
-                if(this.$widgets_to_move) {
-                    if($.inArray($widget, this.$widgets_to_move) === -1){
-                        this.$widgets_to_move.push($widget);
+                if (this.$vertically_clipped_widgets) {
+                    if ($.inArray($widget, this.$vertically_clipped_widgets) === -1) {
+                        this.$vertically_clipped_widgets.push($widget);
                     }
 
                 }
