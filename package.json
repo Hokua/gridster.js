@@ -5,20 +5,20 @@
   "version": "0.5.6",
   "homepage": "http://gridster.net/",
   "author": {
-    "name": "ducksboard",
-    "email": "hackers@ducksboard.com"
+    "name": "Christopher Bruno",
+    "email": "cbruno@hawaiirg.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/ducksboard/gridster.js.git"
+    "url": "git://github.com/Hokua/gridster.js.git"
   },
   "bugs": {
-    "url": "https://github.com/ducksboard/gridster.js/issues"
+    "url": "https://github.com/Hokua/gridster.js/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/ducksboard/gridster.js/blob/master/LICENSE"
+      "url": "github.com/Hokua/gridster.js/blob/master/LICENSE"
     }
   ],
   "keywords": [],
