@@ -849,6 +849,24 @@
     };
 
     /**
+     * arranges the widgets to remove vertical clipping
+     * @param widgets to check*
+     */
+
+    fn.arrange_widgets_no_vertical_clipping = function ($check_widgets) {
+        var count = $check_widgets.length,
+            i = 0;
+
+        for (; i < count; i++) {
+            var $w = $check_widgets[i];
+            if (this.is_clipped_vertically($w.coords().grid)) {
+                this.move_widget_to_closest_available_cell($w);
+            }
+        }
+
+    };
+
+    /**
      * Is the widget vertically clipped ?
      * @param grid_data
      * @returns {boolean} true of clipped, false otherwise
@@ -1316,16 +1334,8 @@
 
         this.$vertically_clipped_widgets.push(this.$player);
 
-        var count = this.$vertically_clipped_widgets.length,
-            i = 0;
-
-        for (; i < count; i++) {
-            var $w = this.$vertically_clipped_widgets[i];
-            if (this.is_clipped_vertically($w.coords().grid)) {
-                this.move_widget_to_closest_available_cell($w);
-            }
-
-        }
+        this.arrange_widgets_no_vertical_clipping(this.$vertically_clipped_widgets);
+        
         this.$vertically_clipped_widgets = [];
 
         this.$player = null;
@@ -1454,16 +1464,7 @@
         }
 
         this.$vertically_clipped_widgets.push(this.$resized_widget);
-
-        var count = this.$vertically_clipped_widgets.length,
-            i = 0;
-        for (; i < count; i++) {
-            var $w = this.$vertically_clipped_widgets[i];
-            if (this.is_clipped_vertically($w.coords().grid)) {
-                this.move_widget_to_closest_available_cell($w);
-            }
-
-        }
+        this.arrange_widgets_no_vertical_clipping(this.$vertically_clipped_widgets);
         this.$vertically_clipped_widgets = [];
     };
 
