@@ -1,6 +1,6 @@
 /*! gridster.js - v0.5.6 - 2015-02-03
 * http://gridster.net/
- * Copyright (c) 2015 Christopher Bruno; Licensed MIT */
+* Copyright (c) 2015 Christopher Bruno; Licensed MIT */
 
 ;(function(root, factory) {
 
@@ -1681,15 +1681,16 @@
      * @returns {{x: *, y: *, width: number, height: number}}
      */
 
-    fn.coords_to_dom = function (grid_data) {
+    fn.coords_to_dom = function(grid_data)
+    {
         var dimensions = this.options.widget_base_dimensions,
             margins = this.options.widget_margins;
 
         return {
-            x: (grid_data.col - 1) * (dimensions[0] + 2 * margins[0]) + margins[0],
-            y: (grid_data.row - 1) * (dimensions[1] + 2 * margins[1]) + margins[1],
-            width: grid_data.size_x * dimensions[0] + (grid_data.size_x - 1) * 2 * margins[0],
-            height: grid_data.size_y * dimensions[1] + (grid_data.size_y - 1) * 2 * margins[1]
+            x: (grid_data.col - 1) * (dimensions[0] + 2*margins[0]) + margins[0],
+            y: (grid_data.row - 1) * (dimensions[1] + 2*margins[1]) + margins[1],
+            width : grid_data.size_x*dimensions[0] + (grid_data.size_x-1)*2*margins[0],
+            height : grid_data.size_y*dimensions[1] + (grid_data.size_y-1)*2*margins[1]
         };
 
     };
@@ -1700,11 +1701,12 @@
      */
 
     fn.arrange_widgets_no_vertical_clipping = function ($check_widgets) {
+        
         var count = $check_widgets.length,
             i = 0;
 
         for (; i < count; i++) {
-            var $w = $check_widgets[i];
+            var $w = $($check_widgets[i]);
             if (this.is_clipped_vertically($w.coords().grid)) {
                 this.move_widget_to_closest_available_cell($w);
             }
@@ -1717,10 +1719,11 @@
      * @param grid_data
      * @returns {boolean} true of clipped, false otherwise
      */
-
-    fn.is_clipped_vertically = function (grid_data) {
+    
+    fn.is_clipped_vertically = function(grid_data)
+    {
         var frame = this.coords_to_dom(grid_data);
-        return (frame.y + frame.height + this.options.widget_margins[1] + 16.0 > this.$wrapper.height());
+       return (frame.y+frame.height + this.options.widget_margins[1]+16.0 > this.$wrapper.height());
 
     };
 
@@ -1730,8 +1733,8 @@
      * @param $widget
      * @returns false if not moved, Gridster object if moved
      */
-
-    fn.move_widget_to_closest_available_cell = function ($widget) {
+    
+    fn.move_widget_to_closest_available_cell = function($widget){
         
         var widget_grid_data = $widget.coords().grid;
         var start_col = widget_grid_data.col; 
@@ -1740,67 +1743,67 @@
         var placed = false; 
         
         //check in this column
-        var row = this.get_highest_occupied_row_for_col(new_data.col) + 2;
+        var row = this.get_highest_occupied_row_for_col(new_data.col)+2;
 
-        while (row > 1 && !placed) {
+        while(row > 1 && !placed){
             row--;
             placed = this.move_widget_to_row_in_col($widget, row, new_data.col);
         }
 
-        if (placed) {
+        if(placed){
             return this;
         }
 
-        var shift_idx = 1;
+         var shift_idx = 1;
 
-        while (start_col - shift_idx > 0 && !placed) {
+        while(start_col - shift_idx > 0 && !placed){
             //check column to left
             new_data.col = start_col - shift_idx;
-            var row = this.get_highest_occupied_row_for_col(new_data.col) + 2;
-            while (row > 1 && !placed) {
-                row--;
-                placed = this.move_widget_to_row_in_col($widget, row, new_data.col);
+            var row = this.get_highest_occupied_row_for_col(new_data.col)+2;
+            while(row > 1 && !placed){
+                 row--;
+                 placed = this.move_widget_to_row_in_col($widget, row, new_data.col);
 
             }
 
-            if (placed) {
+            if(placed){
                 return this;
             }
-
+ 
             new_data.col = start_col + shift_idx;
-            row = this.get_highest_occupied_row_for_col(new_data.col) + 2;
+            row = this.get_highest_occupied_row_for_col(new_data.col)+2;
 
-            while (row > 1 && !placed) {
+            while(row > 1 && !placed){
                 row--;
                 placed = this.move_widget_to_row_in_col($widget, row, new_data.col);
 
             }
-
-            if (placed) {
+            
+            if(placed){
                 return this; 
             }
-
+            
             shift_idx++;
         }
-
+        
         //keep checking to the right
-        while (!placed && new_data.col < 100) {
+        while(!placed && new_data.col < 100){
 
             new_data.col = start_col + shift_idx;
-            var row = this.get_highest_occupied_row_for_col(new_data.col) + 2;
-            while (row > 1 && !placed) {
+            var row = this.get_highest_occupied_row_for_col(new_data.col)+2;
+            while(row > 1 && !placed){
                 row--;
                 placed = this.move_widget_to_row_in_col($widget, row, new_data.col);
 
             }
 
-            if (placed) {
+            if(placed){
                 return this;
             }
 
             shift_idx++;
         }
-
+        
         return false; 
     };
 
@@ -2179,7 +2182,7 @@
 
         this.$vertically_clipped_widgets.push(this.$player);
 
-        this.arrange_widgets_no_vertical_clipping(this.$vertically_clipped_widgets);
+        this.arrange_widgets_no_vertical_clipping(this.$widgets);
         
         this.$vertically_clipped_widgets = [];
 
@@ -2706,26 +2709,27 @@
      * @param grid_data region to check
      * @return {Boolean} Returns true or false.
      */
-
-    fn.is_cells_occupied = function (grid_data) {
+    
+    fn.is_cells_occupied = function(grid_data)
+    {
         var startCol = grid_data.col,
             startRow = grid_data.row,
-            endCol = startCol + grid_data.size_x,
-            endRow = startRow + grid_data.size_y;
+            endCol = startCol+grid_data.size_x,
+            endRow = startRow+grid_data.size_y;
         
         var col = startCol;
-        for (; col < endCol; col++) {
+        for(; col < endCol; col++){
             var row = startRow;
-            for (; row < endRow; row++) {
-                if (this.is_occupied(col, row)) {
+            for(; row < endRow; row++){
+                if(this.is_occupied(col, row)){
                     return true;
                 }
             }
         }
-
+        
         return false;
     };
-
+    
     /**
     * Determines if the cell represented by col and row params is occupied.
     *
@@ -3160,7 +3164,7 @@
      * widget is going to be moved.
      * @return {Class} Returns the instance of the Gridster Class.
      */
-    fn.move_widget_to_row_in_col = function ($widget, row, col) {
+    fn.move_widget_to_row_in_col = function($widget, row, col) {
         var self = this;
         var widget_grid_data = $widget.coords().grid;
         var diff = row - widget_grid_data.row;
@@ -3182,7 +3186,7 @@
         this.add_to_gridmap(widget_grid_data);
         $widget.attr('data-row', row);
         $widget.attr('data-col', col);
-
+        
         this.$changed = this.$changed.add($widget);
 
 
@@ -3326,9 +3330,9 @@
             this.$changed = this.$changed.add($widget);
 
             moved.push($widget);
-
+            
             //clipped widgets
-            if (this.is_clipped_vertically(widget_grid_data)) {
+            if(this.is_clipped_vertically(widget_grid_data)){
                 if (this.$vertically_clipped_widgets) {
                     if ($.inArray($widget, this.$vertically_clipped_widgets) === -1) {
                         this.$vertically_clipped_widgets.push($widget);
@@ -3772,8 +3776,8 @@
      * @method get_highest_occupied_cell
      * @return {Number} Returns an row number.
      */
-
-    fn.get_highest_occupied_row_for_col = function (col) {
+    
+    fn.get_highest_occupied_row_for_col = function(col){
 
         var r;
         var gm = this.gridmap;
@@ -3787,9 +3791,9 @@
         }
 
         return Math.max.apply(Math, rows);
-
+        
     };
-
+    
 
     /**
     * Returns the highest occupied cell in the grid.
@@ -3856,7 +3860,7 @@
         /*if (typeof height === 'undefined') {
             var r = this.get_highest_occupied_cell().row;
             height = r * this.min_widget_height;
-         }*/
+        }*/
 
         this.container_height = this.$wrapper.height();
         this.$el.css('height', this.wrapper_height);

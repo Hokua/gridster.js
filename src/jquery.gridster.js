@@ -854,11 +854,12 @@
      */
 
     fn.arrange_widgets_no_vertical_clipping = function ($check_widgets) {
+
         var count = $check_widgets.length,
             i = 0;
 
         for (; i < count; i++) {
-            var $w = $check_widgets[i];
+            var $w = $($check_widgets[i]);
             if (this.is_clipped_vertically($w.coords().grid)) {
                 this.move_widget_to_closest_available_cell($w);
             }
@@ -1334,7 +1335,7 @@
 
         this.$vertically_clipped_widgets.push(this.$player);
 
-        this.arrange_widgets_no_vertical_clipping(this.$vertically_clipped_widgets);
+        this.arrange_widgets_no_vertical_clipping(this.$widgets);
         
         this.$vertically_clipped_widgets = [];
 
