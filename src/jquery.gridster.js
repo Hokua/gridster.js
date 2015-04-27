@@ -430,7 +430,9 @@
     */
     fn.add_resize_handle = function($w) {
         var append_to = this.options.resize.handle_append_to;
-        $(this.resize_handle_tpl).appendTo( append_to ? $(append_to, $w) : $w);
+        var handle = $('.' + this.options.resize_handle_class, $w);
+        if(handle.length == 0)
+            $(this.resize_handle_tpl).appendTo( append_to ? $(append_to, $w) : $w);
 
         return this;
     };
